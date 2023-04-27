@@ -2224,11 +2224,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\MohsenArg\\source\\repos\\GrpcServiceUser\\GrpcServiceUser\\GrpcServiceUser.csproj",
+      "projectUniqueName": "F:\\Projects\\SimpleDashboard-Grpc-React\\SimpleDashboard-Grpc-React\\GrpcServiceUser\\GrpcServiceUser.csproj",
       "projectName": "GrpcServiceUser",
-      "projectPath": "C:\\Users\\MohsenArg\\source\\repos\\GrpcServiceUser\\GrpcServiceUser\\GrpcServiceUser.csproj",
+      "projectPath": "F:\\Projects\\SimpleDashboard-Grpc-React\\SimpleDashboard-Grpc-React\\GrpcServiceUser\\GrpcServiceUser.csproj",
       "packagesPath": "C:\\Users\\MohsenArg\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\MohsenArg\\source\\repos\\GrpcServiceUser\\GrpcServiceUser\\obj\\",
+      "outputPath": "F:\\Projects\\SimpleDashboard-Grpc-React\\SimpleDashboard-Grpc-React\\GrpcServiceUser\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
