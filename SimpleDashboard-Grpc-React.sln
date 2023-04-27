@@ -1,0 +1,58 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32112.339
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GrpcServiceUser", "GrpcServiceUser\GrpcServiceUser.csproj", "{F3D5A0F6-0850-4C85-922C-7F67AFE5444C}"
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "react-js-dashboard", "react-js-dashboard\", "{46B7A154-F502-4421-A58F-90FACCB8CBA7}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_26768"
+		Debug.AspNetCompiler.PhysicalPath = "react-js-dashboard\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_26768\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_26768"
+		Release.AspNetCompiler.PhysicalPath = "react-js-dashboard\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_26768\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "26768"
+		SlnRelativePath = "react-js-dashboard\"
+	EndProjectSection
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "GrpcCrud", "DataBase\GrpcCrud\GrpcCrud.sqlproj", "{D79B4918-C288-40A2-8C79-70F316277F38}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F3D5A0F6-0850-4C85-922C-7F67AFE5444C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3D5A0F6-0850-4C85-922C-7F67AFE5444C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3D5A0F6-0850-4C85-922C-7F67AFE5444C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3D5A0F6-0850-4C85-922C-7F67AFE5444C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{46B7A154-F502-4421-A58F-90FACCB8CBA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46B7A154-F502-4421-A58F-90FACCB8CBA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46B7A154-F502-4421-A58F-90FACCB8CBA7}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{46B7A154-F502-4421-A58F-90FACCB8CBA7}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{D79B4918-C288-40A2-8C79-70F316277F38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D79B4918-C288-40A2-8C79-70F316277F38}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D79B4918-C288-40A2-8C79-70F316277F38}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{D79B4918-C288-40A2-8C79-70F316277F38}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D79B4918-C288-40A2-8C79-70F316277F38}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D79B4918-C288-40A2-8C79-70F316277F38}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DA9F366F-1E84-4B23-9289-DB1D355B6987}
+	EndGlobalSection
+EndGlobal
