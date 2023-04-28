@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Grpc.Core;
+using GrpcServiceUser.Repository;
 using UserGrpc.Model;
 using UserGrpc.Model.Entity;
 
@@ -7,66 +8,43 @@ namespace GrpcServiceUser.Services
 {
     public class UserOpService : UserOp.UserOpBase
     {
-        public GrpcCrudContext DbGrpcCrud { get; set; }
-        public MapperConfiguration MapConfig { get; set; }
-        public Mapper UsrMapper { get; set; }
+        public Repo repo { get; set; }
 
         public UserOpService()
         {
-            DbGrpcCrud = new GrpcCrudContext();
-            MapConfig = new MapperConfiguration(cfg =>
-            cfg.CreateMap<gtUser, User>());
-            UsrMapper = new Mapper(MapConfig);
+            repo = new Repo();
         }
 
-        public override Task<User> UserSelect(UserLoginEntry UserEntry, ServerCallContext context)
+        public override Task<UserEntry> Login(UserLoginEntry UserLogin, ServerCallContext context)
         {
             try
             {
-                if (UserEntry.Email != null && UserEntry.Password != null)
+                UserEntry user = repo.Select(UserLogin);
+                if (user != null) 
                 {
-                    var userlog = DbGrpcCrud.gtUser.Where(q => q.Email == UserEntry.Email && q.Password == UserEntry.Password).FirstOrDefault();
-                    if (userlog != null)
-                    {
-                        if (userlog.Address == null)
-                        {
-                            userlog.Address = "";
-                        }
-                    }
-                    var UserMap = UsrMapper.Map<User>(userlog);
-                    return Task.FromResult(UserMap);
+                    return Task.FromResult(user);
                 }
                 else
                 {
-                    return Task.FromResult(new User());
+                    return Task.FromResult(new UserEntry());
                 }
+
             }
             catch (Exception)
             {
-                return Task.FromResult(new User());
+                return Task.FromResult(new UserEntry());
             }
 
 
         }
-        public override Task<ResultStat> UserInsert(UserAdd user, ServerCallContext context)
+        public override Task<ResultStat> UserAdd(UserEntry user, ServerCallContext context)
         {
             try
             {
-                if (user.Name != null && user.LastName != null && user.Email != null && user.Password != null )
+                ResultStat resultStat = repo.Insert(user);
+                if (resultStat != null)
                 {
-                    var addgtUser = new gtUser()
-                    {
-                        Name = user.Name == "" ? null : user.Name,
-                        LastName = user.LastName == "" ? null : user.LastName,
-                        IsFemale = user.IsFemale,
-                        Address = user.Address == "" ? null : user.Address,
-                        Email = user.Email == "" ? null : user.Email,
-                        Password = user.Password == "" ? null : user.Password,
-                    };
-
-                    DbGrpcCrud.gtUser.Add(addgtUser);
-                    DbGrpcCrud.SaveChanges();
-                    return Task.FromResult(new ResultStat() { Ok = true });
+                    return Task.FromResult(resultStat);
                 }
                 else
                 {
@@ -79,30 +57,14 @@ namespace GrpcServiceUser.Services
                 return Task.FromResult(new ResultStat() { Ok = false });
             }
         }
-        public override Task<ResultStat> UserUpdate(User user, ServerCallContext context)
+        public override Task<ResultStat> UserUpdate(UserEntry user, ServerCallContext context)
         {
             try
             {
-                long id = Convert.ToInt64(user.Id);
-
-                if (id != 0 && user.Name != null && user.LastName != null && user.Email != null && user.Password != null)
+                ResultStat resultStat = repo.Update(user);
+                if (resultStat != null)
                 {
-                    var SeletedUser = DbGrpcCrud.gtUser.Where(q => q.Id == id).FirstOrDefault();
-                    if (SeletedUser != null)
-                    {
-                        SeletedUser.Name = user.Name == "" ? null : user.Name;
-                        SeletedUser.LastName = user.LastName == "" ? null : user.LastName;
-                        SeletedUser.IsFemale = user.IsFemale;
-                        SeletedUser.Address = user.Address == "" ? null : user.Address;
-                        SeletedUser.Email = user.Email == "" ? null : user.Email;
-                        SeletedUser.Password = user.Password == "" ? null : user.Password;
-                        DbGrpcCrud.SaveChanges();
-                        return Task.FromResult(new ResultStat() { Ok = true });
-                    }
-                    else
-                    {
-                        return Task.FromResult(new ResultStat() { Ok = false });
-                    }
+                    return Task.FromResult(resultStat);
                 }
                 else
                 {
@@ -116,25 +78,14 @@ namespace GrpcServiceUser.Services
             }
 
         }
-        public override Task<ResultStat> UserDelete(UserId userId, ServerCallContext context)
+        public override Task<ResultStat> UserDelete(UserDeleteEntry userId, ServerCallContext context)
         {
             try
             {
-                long id = Convert.ToInt64(userId.Id);
-
-                if (id != 0 )
+                ResultStat resultStat = repo.Delete(userId);
+                if (resultStat != null)
                 {
-                    var SeletedUser = DbGrpcCrud.gtUser.Where(q => q.Id == id).FirstOrDefault();
-                    if (SeletedUser != null)
-                    {
-                        DbGrpcCrud.gtUser.Remove(SeletedUser);
-                        DbGrpcCrud.SaveChanges();
-                        return Task.FromResult(new ResultStat() { Ok = true });
-                    }
-                    else
-                    {
-                        return Task.FromResult(new ResultStat() { Ok = false });
-                    }
+                    return Task.FromResult(resultStat);
                 }
                 else
                 {
