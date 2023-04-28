@@ -5,35 +5,26 @@ option csharp_namespace = "GrpcServiceUser";
 
 
 service UserOp {
-  rpc UserSelect (UserLoginEntry) returns (User);
-  rpc UserInsert (UserAdd) returns (ResultStat);
-  rpc UserUpdate (User) returns (ResultStat);
-  rpc UserDelete (UserId) returns (ResultStat);
+  rpc Login (UserLoginEntry) returns (UserEntry);
+  rpc UserAdd (UserEntry) returns (ResultStat);
+  rpc UserUpdate (UserEntry) returns (ResultStat);
+  rpc UserDelete (UserDeleteEntry) returns (ResultStat);
 }
 
 
-message UserId {
-	int64 Id = 1;
+message UserEntry {
+	string Name = 1;
+	string LastName = 2;
+	bool IsFemale = 3;
+	string Address = 4;
+	string Email = 5;
+	string Password = 6;
 }
 
-message User {
-	int64 Id = 1;
-	string Name = 2;
-	string LastName = 3;
-	bool IsFemale = 4;
-	string Address = 5;
-	string Email = 6;
-	string Password = 7;
+message UserDeleteEntry {
+
 }
 
-message UserAdd {
-	string Name = 2;
-	string LastName = 3;
-	bool IsFemale = 4;
-	string Address = 5;
-	string Email = 6;
-	string Password = 7;
-}
 message UserLoginEntry {
 	string Email = 1;
 	string Password = 2;
