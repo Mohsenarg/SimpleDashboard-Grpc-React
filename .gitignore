@@ -1,1 +1,5 @@
 /.vs
+/DataBase/GrpcCrud/bin
+/DataBase/GrpcCrud/obj
+*.dbmdl
+*.jfm

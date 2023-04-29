@@ -37,6 +37,7 @@ namespace GrpcServiceUser.Services
 
 
         }
+
         public override Task<ResultStat> UserAdd(UserEntry user, ServerCallContext context)
         {
             try
@@ -57,6 +58,7 @@ namespace GrpcServiceUser.Services
                 return Task.FromResult(new ResultStat() { Ok = false });
             }
         }
+
         public override Task<ResultStat> UserUpdate(UserEntry user, ServerCallContext context)
         {
             try
@@ -78,6 +80,7 @@ namespace GrpcServiceUser.Services
             }
 
         }
+
         public override Task<ResultStat> UserDelete(UserDeleteEntry userId, ServerCallContext context)
         {
             try
