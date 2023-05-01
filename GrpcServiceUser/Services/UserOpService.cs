@@ -23,42 +23,71 @@ namespace GrpcServiceUser.Services
                 if (user != null) 
                 {
                     UserEntry.Types.AuthResult authResult = AuthenticationHandler.Authenticate(true);
-                    return Task.FromResult(new UserEntry { Data = user, AuthResult = authResult });
+                    return Task.FromResult(new UserEntry()
+                    {
+                        Data = user,
+                        AuthResult = authResult,
+                        ResultStat = new UserEntry.Types.ResultStat() { Ok = true }
+                    });
 
                 }
                 else
                 {
-                    return Task.FromResult(new UserEntry());
+                    return Task.FromResult(new UserEntry()
+                    {
+                        Data = new UserEntry.Types.Data(),
+                        AuthResult = new UserEntry.Types.AuthResult(),
+                        ResultStat = new UserEntry.Types.ResultStat() { Ok = false }
+                    });
                 }
 
             }
             catch (Exception)
             {
-                return Task.FromResult(new UserEntry());
+                return Task.FromResult(new UserEntry()
+                {
+                    Data = new UserEntry.Types.Data(),
+                    AuthResult = new UserEntry.Types.AuthResult(),
+                    ResultStat = new UserEntry.Types.ResultStat() { Ok = false }
+                });
             }
 
 
         }
 
         [AllowAnonymous]
-        public override Task<ResultStat> UserAdd(UserEntry.Types.Data user, ServerCallContext context)
+        public override Task<UserEntry> UserAdd(UserEntry.Types.Data user, ServerCallContext context)
         {
             try
             {
-                ResultStat resultStat = repo.Insert(user);
-                if (resultStat != null)
+                UserEntry.Types.Data resultStat = repo.Insert(user);
+                if (user != null)
                 {
-                    return Task.FromResult(resultStat);
+                    UserEntry.Types.AuthResult authResult = AuthenticationHandler.Authenticate(true);
+                    return Task.FromResult(new UserEntry() {
+                        Data = user , AuthResult = authResult , 
+                        ResultStat = new UserEntry.Types.ResultStat() { Ok = true } });
+
                 }
                 else
                 {
-                    return Task.FromResult(new ResultStat() { Ok = false });
+                    return Task.FromResult(new UserEntry()
+                    {
+                        Data = new UserEntry.Types.Data() ,
+                        AuthResult = new UserEntry.Types.AuthResult() ,
+                        ResultStat = new UserEntry.Types.ResultStat() { Ok = false }
+                    });
                 }
+
             }
             catch (Exception)
             {
-
-                return Task.FromResult(new ResultStat() { Ok = false });
+                return Task.FromResult(new UserEntry()
+                {
+                    Data = new UserEntry.Types.Data(),
+                    AuthResult = new UserEntry.Types.AuthResult(),
+                    ResultStat = new UserEntry.Types.ResultStat() { Ok = false }
+                });
             }
         }
 

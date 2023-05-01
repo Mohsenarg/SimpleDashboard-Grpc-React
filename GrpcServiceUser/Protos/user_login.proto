@@ -6,7 +6,7 @@ option csharp_namespace = "GrpcServiceUser";
 
 service UserOp {
   rpc Login (UserLoginEntry) returns (UserEntry);
-  rpc UserAdd (UserEntry.Data) returns (ResultStat);
+  rpc UserAdd (UserEntry.Data) returns (UserEntry);
   rpc UserUpdate (UserEntry.Data) returns (ResultStat);
   rpc UserDelete (UserDeleteEntry) returns (ResultStat);
 }
@@ -25,8 +25,12 @@ message UserEntry {
 		string AccessToken = 1;
 		int32 ExpiresIn = 2;
 	}
+	message ResultStat{
+		bool Ok = 1;
+	}
 	Data data = 1;
 	AuthResult authResult = 2;
+	ResultStat resultStat = 3;
 }
 
 message UserDeleteEntry {

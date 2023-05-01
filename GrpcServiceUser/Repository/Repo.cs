@@ -38,8 +38,9 @@ namespace GrpcServiceUser.Repository
             }
             return UserMap;
         }
-        public ResultStat Insert(UserEntry.Types.Data user)
+        public UserEntry.Types.Data Insert(UserEntry.Types.Data user)
         {
+            UserEntry.Types.Data UserMap = new UserEntry.Types.Data();
             if (user.Name != null && user.LastName != null && user.Email != null && user.Password != null)
             {
                 var addgtUser = new gtUser()
@@ -55,12 +56,9 @@ namespace GrpcServiceUser.Repository
                 DbGrpcCrud.gtUser.Add(addgtUser);
                 DbGrpcCrud.SaveChanges();
                 Id = addgtUser.Id.ToInt();
-                return new ResultStat() { Ok = true };
+                UserMap = mp._Mapper.Map<UserEntry.Types.Data>(addgtUser);
             }
-            else 
-            { 
-                return new ResultStat() { Ok = false };
-            }
+            return UserMap;
         }
         public ResultStat Update(UserEntry.Types.Data user)
         {
