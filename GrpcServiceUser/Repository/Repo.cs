@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using Grpc.Core;
 using GrpcServiceUser.Mapp;
+using Microsoft.AspNetCore.Session;
 using UserGrpc.Model;
 using UserGrpc.Model.Entity;
 
@@ -7,9 +9,10 @@ namespace GrpcServiceUser.Repository
 {
     public class Repo
     {
-        public long Id { get; set; }
+        static volatile public int Id = 0;
         public UserMapper mp { get; set; }
         public GrpcCrudContext DbGrpcCrud { get; set; }
+
 
         public Repo()
         {
@@ -24,7 +27,7 @@ namespace GrpcServiceUser.Repository
                 var userlog = DbGrpcCrud.gtUser.Where(q => q.Email == user.Email && q.Password == user.Password).FirstOrDefault();
                 if (userlog != null)
                 {
-                    Id= userlog.Id;
+                    Id = userlog.Id.ToInt();
                     if (userlog.Address == null)
                     {
                         userlog.Address = "";
@@ -51,7 +54,7 @@ namespace GrpcServiceUser.Repository
 
                 DbGrpcCrud.gtUser.Add(addgtUser);
                 DbGrpcCrud.SaveChanges();
-                Id = addgtUser.Id;
+                Id = addgtUser.Id.ToInt();
                 return new ResultStat() { Ok = true };
             }
             else 
