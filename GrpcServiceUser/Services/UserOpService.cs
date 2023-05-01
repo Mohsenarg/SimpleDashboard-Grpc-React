@@ -1,8 +1,7 @@
-﻿using AutoMapper;
-using Grpc.Core;
+﻿using Grpc.Core;
+using GrpcServiceUser.Helper;
 using GrpcServiceUser.Repository;
-using UserGrpc.Model;
-using UserGrpc.Model.Entity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GrpcServiceUser.Services
 {
@@ -15,51 +14,87 @@ namespace GrpcServiceUser.Services
             repo = new Repo();
         }
 
+        [AllowAnonymous]
         public override Task<UserEntry> Login(UserLoginEntry UserLogin, ServerCallContext context)
         {
             try
             {
-                UserEntry user = repo.Select(UserLogin);
+                UserEntry.Types.Data user = repo.Select(UserLogin);
                 if (user != null) 
                 {
-                    return Task.FromResult(user);
+                    UserEntry.Types.AuthResult authResult = AuthenticationHandler.Authenticate(true);
+                    return Task.FromResult(new UserEntry()
+                    {
+                        Data = user,
+                        AuthResult = authResult,
+                        ResultStat = new UserEntry.Types.ResultStat() { Ok = true }
+                    });
+
                 }
                 else
                 {
-                    return Task.FromResult(new UserEntry());
+                    return Task.FromResult(new UserEntry()
+                    {
+                        Data = new UserEntry.Types.Data(),
+                        AuthResult = new UserEntry.Types.AuthResult(),
+                        ResultStat = new UserEntry.Types.ResultStat() { Ok = false }
+                    });
                 }
 
             }
             catch (Exception)
             {
-                return Task.FromResult(new UserEntry());
+                return Task.FromResult(new UserEntry()
+                {
+                    Data = new UserEntry.Types.Data(),
+                    AuthResult = new UserEntry.Types.AuthResult(),
+                    ResultStat = new UserEntry.Types.ResultStat() { Ok = false }
+                });
             }
 
 
         }
 
-        public override Task<ResultStat> UserAdd(UserEntry user, ServerCallContext context)
+        [AllowAnonymous]
+        public override Task<UserEntry> UserAdd(UserEntry.Types.Data user, ServerCallContext context)
         {
             try
             {
-                ResultStat resultStat = repo.Insert(user);
+                UserEntry.Types.Data resultStat = repo.Insert(user);
                 if (resultStat != null)
                 {
-                    return Task.FromResult(resultStat);
+                    UserEntry.Types.AuthResult authResult = AuthenticationHandler.Authenticate(true);
+                    return Task.FromResult(new UserEntry() 
+                    {
+                        Data = user , AuthResult = authResult , 
+                        ResultStat = new UserEntry.Types.ResultStat() { Ok = true } 
+                    });
+
                 }
                 else
                 {
-                    return Task.FromResult(new ResultStat() { Ok = false });
+                    return Task.FromResult(new UserEntry()
+                    {
+                        Data = new UserEntry.Types.Data() ,
+                        AuthResult = new UserEntry.Types.AuthResult() ,
+                        ResultStat = new UserEntry.Types.ResultStat() { Ok = false }
+                    });
                 }
+
             }
             catch (Exception)
             {
-
-                return Task.FromResult(new ResultStat() { Ok = false });
+                return Task.FromResult(new UserEntry()
+                {
+                    Data = new UserEntry.Types.Data(),
+                    AuthResult = new UserEntry.Types.AuthResult(),
+                    ResultStat = new UserEntry.Types.ResultStat() { Ok = false }
+                });
             }
         }
 
-        public override Task<ResultStat> UserUpdate(UserEntry user, ServerCallContext context)
+        [Authorize(Roles = "AuthenticatedUser")]
+        public override Task<ResultStat> UserUpdate(UserEntry.Types.Data user, ServerCallContext context)
         {
             try
             {
@@ -81,6 +116,7 @@ namespace GrpcServiceUser.Services
 
         }
 
+        [Authorize(Roles = "AuthenticatedUser")]
         public override Task<ResultStat> UserDelete(UserDeleteEntry userId, ServerCallContext context)
         {
             try

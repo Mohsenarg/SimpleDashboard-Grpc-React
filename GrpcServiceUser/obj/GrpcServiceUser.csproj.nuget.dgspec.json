@@ -59,6 +59,14 @@
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
               "version": "[6.0.16, )"
+            },
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[6.30.0, )"
+            },
+            "WebMotions.Fake.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[6.1.1, )"
             }
           },
           "imports": [
