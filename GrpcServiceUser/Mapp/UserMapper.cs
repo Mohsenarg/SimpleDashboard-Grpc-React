@@ -15,7 +15,7 @@ namespace GrpcServiceUser.Mapp
         {
             Id = id;
             MapConfig = new MapperConfiguration(cfg =>
-            cfg.CreateMap<gtUser, UserEntry>()
+            cfg.CreateMap<gtUser, UserEntry.Types.Data>()
             .ReverseMap()
             .ForMember(des => des.Id ,opt => opt.MapFrom(s => Id))
             );

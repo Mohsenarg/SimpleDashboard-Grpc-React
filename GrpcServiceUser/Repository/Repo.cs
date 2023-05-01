@@ -19,9 +19,9 @@ namespace GrpcServiceUser.Repository
             DbGrpcCrud = new GrpcCrudContext();
         }
 
-        public UserEntry Select(UserLoginEntry user) 
+        public UserEntry.Types.Data Select(UserLoginEntry user) 
         {
-            UserEntry UserMap = new UserEntry();
+            UserEntry.Types.Data UserMap = new UserEntry.Types.Data();
             if (user.Email != null && user.Password != null)
             {
                 var userlog = DbGrpcCrud.gtUser.Where(q => q.Email == user.Email && q.Password == user.Password).FirstOrDefault();
@@ -34,11 +34,11 @@ namespace GrpcServiceUser.Repository
                     }
                 }
                 mp = new UserMapper(Id);
-                UserMap = mp._Mapper.Map<UserEntry>(userlog);
+                UserMap = mp._Mapper.Map<UserEntry.Types.Data>(userlog);
             }
             return UserMap;
         }
-        public ResultStat Insert(UserEntry user)
+        public ResultStat Insert(UserEntry.Types.Data user)
         {
             if (user.Name != null && user.LastName != null && user.Email != null && user.Password != null)
             {
@@ -62,7 +62,7 @@ namespace GrpcServiceUser.Repository
                 return new ResultStat() { Ok = false };
             }
         }
-        public ResultStat Update(UserEntry user)
+        public ResultStat Update(UserEntry.Types.Data user)
         {
             if (Id != 0 && user.Name != null && user.LastName != null && user.Email != null && user.Password != null)
             {
