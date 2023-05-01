@@ -61,12 +61,14 @@ namespace GrpcServiceUser.Services
             try
             {
                 UserEntry.Types.Data resultStat = repo.Insert(user);
-                if (user != null)
+                if (resultStat != null)
                 {
                     UserEntry.Types.AuthResult authResult = AuthenticationHandler.Authenticate(true);
-                    return Task.FromResult(new UserEntry() {
+                    return Task.FromResult(new UserEntry() 
+                    {
                         Data = user , AuthResult = authResult , 
-                        ResultStat = new UserEntry.Types.ResultStat() { Ok = true } });
+                        ResultStat = new UserEntry.Types.ResultStat() { Ok = true } 
+                    });
 
                 }
                 else
