@@ -1,17 +1,16 @@
 .navbar {
   background-color: #ffcaca;
   box-shadow: -10px 5px 10px 3px rgb(158 158 158 / 20%);
-  padding-right: 2rem;
-  padding-left: 2rem;
+  padding-right: 1rem;
+  padding-left: 1rem;
   padding-top: 1rem;
   padding-bottom: 1rem;
-  direction: rtl;
+  direction: ltr;
   position: relative;
   z-index: 3;
 }
-
-.navbar button {
-  float: left;
+.navbar button{
+  margin-right: 1rem;
 }
 
 .navbar a{
@@ -34,11 +33,11 @@
 }
 
 .ant-drawer-header {
-  text-align: right;
+  text-align: left;
 }
 
 .ant-menu-title-content {
-  text-align: right;
+  text-align: left;
 }
 /* 
 .ant-layout {

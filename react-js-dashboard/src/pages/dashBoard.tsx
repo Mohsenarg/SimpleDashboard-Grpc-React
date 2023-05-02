@@ -3,7 +3,7 @@ import { Layout } from "antd";
 import TopicMenu from "../components/topicMenu";
 import NavBar from "../components/navBar";
 import SideBar from "../components/layoutSider";
-
+import '../assets/css/dashBoard.css';
 
 
 import {
@@ -12,6 +12,9 @@ import {
     UserOutlined,
     SettingOutlined
 } from '@ant-design/icons';
+import DeleteAccount from "../components/deleteAccount";
+import UserInfo from "../components/userInfo";
+import EditInformation from "../components/editInformation";
 
 
 type tpc = {
@@ -26,11 +29,20 @@ type Props = {}
 const DashBoard = (props: Props) => {
 
     const icons = [<UserOutlined />, <EditOutlined />, <DeleteOutlined />]
+    const deleteAccount = (
+        <DeleteAccount />
+    )
+    const userInfo = (
+        <UserInfo />
+    )
+    const editInformation = (
+        <EditInformation />
+    )
 
     const topic: tpc[] = [
-        { name: "User Info", container: 1, icon: icons[0] }
-        , { name: "Edit User", container: '1', icon: icons[1] }
-        , { name: "Delete User", container: '1', icon: icons[2] }
+        { name: "User Info", container: userInfo, icon: icons[0] }
+        , { name: "Edit User", container: editInformation, icon: icons[1] }
+        , { name: "Delete User", container: deleteAccount, icon: icons[2] }
     ];
 
     const [contentIndex, setContentIndex] = useState<number>(0);
@@ -62,7 +74,7 @@ const DashBoard = (props: Props) => {
             <NavBar menu={Menu} navH={setHeight} />
             <Layout>
                 <SideBar menu={Menu} initHeight={totalHeight} />
-                <Layout.Content className="content">
+                <Layout.Content className="ctndb">
                     {topic[contentIndex].container}
                 </Layout.Content>
             </Layout>
