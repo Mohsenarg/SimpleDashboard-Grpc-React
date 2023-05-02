@@ -1,12 +1,12 @@
-import { Button, Card, Col, Form, Input, Row, Select } from 'antd'
 import React from 'react'
+import { Button, Card, Col, Form, Input, Row, Select } from 'antd'
 
 type Props = {}
 
-function Signup({ }: Props) {
+function EditInformation({ }: Props) {
 
     const { Option } = Select;
-
+    
     return (
         <>
             <Card title="Signup" size="small" bordered={true} >
@@ -98,7 +98,7 @@ function Signup({ }: Props) {
 
 
                             <Button type="primary" htmlType="submit">
-                                Signup
+                                Edit
                             </Button>
                         </Form>
                     </Col >
@@ -108,4 +108,4 @@ function Signup({ }: Props) {
     )
 }
 
-export default Signup
+export default EditInformation
