@@ -56,6 +56,7 @@ namespace GrpcServiceUser.Repository
                 DbGrpcCrud.gtUser.Add(addgtUser);
                 DbGrpcCrud.SaveChanges();
                 Id = addgtUser.Id.ToInt();
+                mp = new UserMapper(Id);
                 UserMap = mp._Mapper.Map<UserEntry.Types.Data>(addgtUser);
             }
             return UserMap;
