@@ -8,7 +8,7 @@ namespace GrpcServiceUser.Helper
     public class AuthenticationHandler
     {
 
-        public const string TokenKey = "usrcd";
+        public const string TokenKey = "usrcd@Security@Key@Validator";
         private const int TokenValidity = 30;
 
 
