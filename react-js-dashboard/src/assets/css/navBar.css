@@ -1,0 +1,60 @@
+.navbar {
+  background-color: #ffcaca;
+  box-shadow: -10px 5px 10px 3px rgb(158 158 158 / 20%);
+  padding-right: 2rem;
+  padding-left: 2rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  direction: rtl;
+  position: relative;
+  z-index: 3;
+}
+
+.navbar button {
+  float: left;
+}
+
+.navbar a{
+  text-decoration:none
+}
+
+.navbar h3 {
+  display: contents;
+}
+
+.navbar h3 {
+  font-weight: bold;
+  color: #6b88a3;
+}
+
+@media (min-width: 992px) {
+  .menu {
+    display: none;
+  }
+}
+
+.ant-drawer-header {
+  text-align: right;
+}
+
+.ant-menu-title-content {
+  text-align: right;
+}
+/* 
+.ant-layout {
+  direction: rtl;
+} */
+
+/* .logo {
+  width: 25px;
+  height: 25px;
+  border-radius: 8px;
+  border: solid 0.5px;
+  border-color: #1893ff !important;
+  margin-left: 0.5rem;
+} */
+
+.ant-drawer-header{
+  text-align: left !important;
+    direction: rtl !important;
+}
