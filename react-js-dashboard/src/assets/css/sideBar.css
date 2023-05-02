@@ -1,0 +1,18 @@
+/* .sidebar {
+  direction: rtl;
+} */
+
+.Shadow-side {
+  position: relative;
+  z-index: 3;
+  box-shadow: -10px 5px 10px 3px rgb(158, 158, 158, 0.1);
+}
+
+.ant-menu-title-content {
+  text-align: left !important;
+  direction: rtl !important;
+}
+
+.ant-menu-title-content span {
+  margin: 10px;
+}

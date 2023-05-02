@@ -1,0 +1,7 @@
+.ctn{
+    padding: 3vh 10vw 3vh 10vw;
+    height: 100vh;
+    background-repeat: repeat;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
