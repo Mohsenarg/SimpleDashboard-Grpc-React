@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "6Xv+sx2s0dc7pnudzbFTJglKbQyCYhOwKT1NuRPFBYIct2JgHsNDsOhtUVO8DH7z+L4LhwEiz04qT/M3ej1JpA==",
+  "dgSpecHash": "8W95PjFqhMFVgj5v4z0iKKO4uglPVQ7xlUxiFDRQMxfKdsrtOtpsAGVzTHQrrjmBwaGqWoUT9AgqXvrPKH8c8Q==",
   "success": true,
   "projectFilePath": "F:\\Projects\\SimpleDashboard-Grpc-React\\SimpleDashboard-Grpc-React\\GrpcServiceUser\\GrpcServiceUser.csproj",
   "expectedPackageFiles": [
@@ -9,6 +9,7 @@
     "C:\\Users\\MohsenArg\\.nuget\\packages\\grpc.aspnetcore\\2.52.0\\grpc.aspnetcore.2.52.0.nupkg.sha512",
     "C:\\Users\\MohsenArg\\.nuget\\packages\\grpc.aspnetcore.server\\2.52.0\\grpc.aspnetcore.server.2.52.0.nupkg.sha512",
     "C:\\Users\\MohsenArg\\.nuget\\packages\\grpc.aspnetcore.server.clientfactory\\2.52.0\\grpc.aspnetcore.server.clientfactory.2.52.0.nupkg.sha512",
+    "C:\\Users\\MohsenArg\\.nuget\\packages\\grpc.aspnetcore.web\\2.52.0\\grpc.aspnetcore.web.2.52.0.nupkg.sha512",
     "C:\\Users\\MohsenArg\\.nuget\\packages\\grpc.core.api\\2.52.0\\grpc.core.api.2.52.0.nupkg.sha512",
     "C:\\Users\\MohsenArg\\.nuget\\packages\\grpc.net.client\\2.52.0\\grpc.net.client.2.52.0.nupkg.sha512",
     "C:\\Users\\MohsenArg\\.nuget\\packages\\grpc.net.clientfactory\\2.52.0\\grpc.net.clientfactory.2.52.0.nupkg.sha512",

@@ -1,6 +1,7 @@
 using GrpcServiceUser.Helper;
 using GrpcServiceUser.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
@@ -22,13 +23,24 @@ builder.Services.AddAuthentication(options =>
         ValidateAudience = false
     };
 });
+
+builder.Services.AddCors();
 builder.Services.AddAuthorization();
 builder.Services.AddGrpc();
+
+
+
 builder.Services.AddDistributedMemoryCache();
 
 var app = builder.Build();
-app.MapGrpcService<UserOpService>();
-app.MapGet("/", () => "Communication with gRPC endpoints must be made through a gRPC client. To learn how to create a client, visit: https://go.microsoft.com/fwlink/?linkid=2086909");
+
+app.UseGrpcWeb();
+
+app.MapGrpcService<UserOpService>().EnableGrpcWeb();
+app.UseCors(options =>
+     options.WithOrigins("http://localhost:3000")
+            .AllowAnyHeader()
+            .AllowAnyMethod());
 app.UseAuthentication();
 app.UseAuthorization();
 app.Run();
