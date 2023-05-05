@@ -1,6 +1,7 @@
 import React from 'react'
-import { Button, Card, Col, Form, Input, Row } from 'antd';
+import { Button, Card, Col, Form, Input, Row, message } from 'antd';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
+import { useNavigate } from 'react-router-dom'
 import { Connect } from "../services/gRPCConnect";
 import { IuserLoginEntry } from "../models/Irequest";
 
@@ -8,14 +9,41 @@ import { IuserLoginEntry } from "../models/Irequest";
 
 type Props = {}
 
-const login = (props: Props) => {
-
+const Login = (props: Props) => {
   const [formLogin] = Form.useForm();
+  const navigate = useNavigate();
   let connection = new Connect();
+
+  const errorMessage = (msg: string) => {
+    message.open({
+      type: 'error',
+      content: msg,
+      duration: 3
+    });
+  };
+
+  const successMessage = (msg: string) => {
+    message.open({
+      type: 'success',
+      content: msg,
+      duration: 3
+    });
+  };
 
   const login = async (e: IuserLoginEntry) => {
     let { response } = await connection.Login(e.Email, e.Password);
-    console.log(response)
+    if (response.resultStat!.ok) {
+      connection.AddToken(response.authResult!.accessToken);
+      connection.AddData(response.data!);
+      console.log(response);
+      successMessage("login Succesfull, Wellcome " +
+        response.data?.name + " " +
+        response.data?.lastName);
+      navigate('/dashboard');
+    }
+    else {
+      errorMessage("Email or Password Incorrect.");
+    }
   }
 
   const onClick = () => {
@@ -62,4 +90,4 @@ const login = (props: Props) => {
   )
 }
 
-export default login
+export default Login

@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Drawer, Button } from "antd";
-import { MenuOutlined } from "@ant-design/icons";
+import { MenuOutlined, LogoutOutlined } from "@ant-design/icons";
 import "../assets/css/navBar.css";
+import { Connect } from '../services/gRPCConnect';
+import { useNavigate } from 'react-router-dom';
 
 
 type Props = {
@@ -10,6 +12,11 @@ type Props = {
 }
 
 const NavBar = ({menu,navH}: Props) => {
+
+  const navigate = useNavigate();
+
+  let connection = new Connect();
+  
   const [visible, setVisible] = useState<boolean>(false);
 
   const ref  = useRef<HTMLElement>(null);
@@ -28,6 +35,10 @@ const NavBar = ({menu,navH}: Props) => {
       navH(ref.current.clientHeight);
 
   }
+  }
+  const logout =()=>{
+    connection.Logout();
+    navigate('/');
   }
 
   window.addEventListener('resize', handleResize)
@@ -49,7 +60,8 @@ const NavBar = ({menu,navH}: Props) => {
         >
           {menu}
         </Drawer>
-        <a href="/"><img  className='logo' ></img><h3>User Management</h3></a>
+        <a><h3>User Management</h3></a>
+        <a className='logout' onClick={logout}><LogoutOutlined /><h3>Logout</h3></a>
       </nav>
     </>
   )

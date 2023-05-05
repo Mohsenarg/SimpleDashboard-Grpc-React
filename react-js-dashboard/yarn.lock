@@ -1665,14 +1665,6 @@
     schema-utils "^3.0.0"
     source-map "^0.7.3"
 
-"@protobuf-ts/grpc-transport@^2.9.0":
-  version "2.9.0"
-  resolved "https://registry.yarnpkg.com/@protobuf-ts/grpc-transport/-/grpc-transport-2.9.0.tgz#cb595b8038cc1e599f4ef269c1714e1b80918336"
-  integrity sha512-LiPZ95G9BPVgxO6tJIXjaX3hxtTPrvzi7h4ZU9ce+3Wd9/nzYkawTMtZ6CpLZCSpsk4KlFuDfNmyfJLWefSdKw==
-  dependencies:
-    "@protobuf-ts/runtime" "^2.9.0"
-    "@protobuf-ts/runtime-rpc" "^2.9.0"
-
 "@protobuf-ts/grpcweb-transport@^2.9.0":
   version "2.9.0"
   resolved "https://registry.yarnpkg.com/@protobuf-ts/grpcweb-transport/-/grpcweb-transport-2.9.0.tgz#4273517fef2c5dbe34386e626776f146ba29a3ec"
@@ -1716,14 +1708,6 @@
   version "2.9.0"
   resolved "https://registry.yarnpkg.com/@protobuf-ts/runtime/-/runtime-2.9.0.tgz#fca33476d0fcdd8255680321df893af7ed5bab21"
   integrity sha512-DnJtLZFMglADv9jiawBmg0RaET4a6fNSAaAHuU6Ovw2ZhJ23ehIY0NrlYLS0Lc8HRH0S5rkLI1QF1A1h8uKUnA==
-
-"@protobuf-ts/twirp-transport@^2.9.0":
-  version "2.9.0"
-  resolved "https://registry.yarnpkg.com/@protobuf-ts/twirp-transport/-/twirp-transport-2.9.0.tgz#d8ce1943d59363f49db6114f8bbae773a96ce18c"
-  integrity sha512-EsV2JG+Ysn6OBub8XiyZJy7owYTRZgKRK8mQDUDUvGSejvo2l2BGQcfo9yn/0y5K0Zs4dnxa0PwtLYF6zPmuIQ==
-  dependencies:
-    "@protobuf-ts/runtime" "^2.9.0"
-    "@protobuf-ts/runtime-rpc" "^2.9.0"
 
 "@rc-component/context@^1.3.0":
   version "1.3.0"

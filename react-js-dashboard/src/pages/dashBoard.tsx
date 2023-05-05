@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Layout } from "antd";
 import TopicMenu from "../components/topicMenu";
 import NavBar from "../components/navBar";
@@ -15,6 +15,8 @@ import {
 import DeleteAccount from "../components/deleteAccount";
 import UserInfo from "../components/userInfo";
 import EditInformation from "../components/editInformation";
+import { Connect } from "../services/gRPCConnect";
+import { useNavigate } from "react-router-dom";
 
 
 type tpc = {
@@ -27,6 +29,18 @@ type Props = {}
 
 
 const DashBoard = (props: Props) => {
+
+    const navigate = useNavigate();
+
+
+
+
+    useEffect((): void => {
+        let connection = new Connect();
+        if (connection.CheckLogin() === "notlogin") {
+            navigate('/');
+        }
+    }, [])
 
     const icons = [<UserOutlined />, <EditOutlined />, <DeleteOutlined />]
     const deleteAccount = (

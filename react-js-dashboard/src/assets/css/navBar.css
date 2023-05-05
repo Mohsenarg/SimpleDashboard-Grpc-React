@@ -57,3 +57,7 @@
   text-align: left !important;
     direction: rtl !important;
 }
+.logout{
+  float: right;
+  cursor: pointer;
+}
