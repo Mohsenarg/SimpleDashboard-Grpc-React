@@ -1,19 +1,28 @@
 import { Descriptions } from 'antd'
-import React from 'react'
+import React, { useEffect } from 'react'
+import { Connect } from '../services/gRPCConnect'
+import { IData } from '../models/Iresponse'
 
 type Props = {}
 
 const UserInfo = (props: Props) => {
+    const [data , setData]= React.useState<IData>()
+
+    useEffect((): void => {
+        let connection = new Connect();
+        setData(connection.GetData());
+    }, [])
+
     return (
         <>
             <Descriptions title="User Info" bordered>
-                <Descriptions.Item label="Name">Zhou Maomao</Descriptions.Item>
-                <Descriptions.Item label="Last Name">1810000000</Descriptions.Item>
-                <Descriptions.Item label="Gender">Hangzhou, Zhejiang</Descriptions.Item>
+                <Descriptions.Item label="Name">{data?.name}</Descriptions.Item>
+                <Descriptions.Item label="Last Name">{data?.lastName}</Descriptions.Item>
+                <Descriptions.Item label="Gender">{data?.isFemale?"Female":"Male"}</Descriptions.Item>
                 <Descriptions.Item label="Address">
-                    No. 18, Wantang Road, Xihu District, Hangzhou, Zhejiang, China
+                {data?.address}
                 </Descriptions.Item>
-                <Descriptions.Item label="Email">empty</Descriptions.Item>
+                <Descriptions.Item label="Email">{data?.email}</Descriptions.Item>
             </Descriptions>
         </>
     )

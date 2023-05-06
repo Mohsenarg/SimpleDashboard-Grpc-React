@@ -1,21 +1,74 @@
-import React from 'react'
-import { Button, Card, Col, Form, Input, Row, Select } from 'antd'
+import React, { useEffect } from 'react'
+import { Button, Card, Col, Form, Input, Row, Select, message } from 'antd'
+import { Connect } from '../services/gRPCConnect';
+import { IData } from '../models/Iresponse';
 
 type Props = {}
 
-function EditInformation({ }: Props) {
+function EditInformation(props: Props) {
+
+    const [formEdit] = Form.useForm();
 
     const { Option } = Select;
+
+    const [data, setData] = React.useState<IData>();
+
+    let connection = new Connect();
+
+    useEffect((): void => {
+        setData(connection.GetData());
+    }, [])
+
+    useEffect(() => formEdit.resetFields(), [data]);
+
     
+
+    const errorMessage = (msg: string) => {
+        message.open({
+            type: 'error',
+            content: msg,
+            duration: 3
+        });
+    };
+
+    const successMessage = (msg: string) => {
+        message.open({
+            type: 'success',
+            content: msg,
+            duration: 3
+        });
+    };
+
+    const login = async (e: IData) => {
+        let { response } = await connection.UserUpdate(e);
+        if (response.ok) {
+            successMessage("User Info Updated");
+        }
+        else {
+            errorMessage("Can Not Update User With This Values");
+        }
+    }
+
+    const onClick = () => {
+
+        formEdit.validateFields().then(
+            () => {
+                let tmp = formEdit.getFieldsValue(true);
+                login(tmp);
+            }
+        )
+    }
+
     return (
         <>
-            <Card title="Signup" size="small" bordered={true} >
+            <Card title="Edit User Info" size="small" bordered={true} >
                 <Row justify="space-around" align="middle">
                     <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 24 }} >
-                        <Form name="formLogin" >
+                        <Form name="formLogin" form={formEdit} >
                             <Form.Item
                                 name="Name"
                                 label="Name"
+                                initialValue={data?.name}
                                 rules={[{ required: true, message: 'Please input your nickname!', whitespace: true }]}
                             >
                                 <Input />
@@ -23,6 +76,7 @@ function EditInformation({ }: Props) {
                             <Form.Item
                                 name="LastName"
                                 label="Last Name"
+                                initialValue={data?.lastName}
                                 rules={[{ required: true, message: 'Please input your nickname!', whitespace: true }]}
                             >
                                 <Input />
@@ -30,6 +84,7 @@ function EditInformation({ }: Props) {
                             <Form.Item
                                 name="gender"
                                 label="Gender"
+                                initialValue={data?.isFemale ? "Female" : "Male"}
                                 rules={[{ required: true, message: 'Please select gender!' }]}
                             >
                                 <Select placeholder="select your gender">
@@ -40,6 +95,7 @@ function EditInformation({ }: Props) {
                             <Form.Item
                                 name="address"
                                 label="Address"
+                                initialValue={data?.address}
                                 rules={[{ required: true, message: 'Please input Address' }]}
                             >
                                 <Input.TextArea showCount maxLength={100} />
@@ -47,6 +103,7 @@ function EditInformation({ }: Props) {
                             <Form.Item
                                 name="email"
                                 label="E-mail"
+                                initialValue={data?.email}
                                 rules={[
                                     {
                                         type: 'email',
@@ -95,11 +152,11 @@ function EditInformation({ }: Props) {
                             >
                                 <Input.Password />
                             </Form.Item>
-
-
-                            <Button type="primary" htmlType="submit">
-                                Edit
-                            </Button>
+                            <Form.Item>
+                                <Button type="primary" htmlType="submit" onClick={onClick}>
+                                    Edit
+                                </Button>
+                            </Form.Item>
                         </Form>
                     </Col >
                 </Row>

@@ -5,19 +5,19 @@ export interface IUserEntry {
 }
 
 export interface IData {
-  Name: string
-  LastName: string
-  IsFemale: boolean
-  Address: string
-  Email: string
-  Password: string
+  name: string
+  lastName: string
+  isFemale: boolean
+  address: string
+  email: string
+  password: string
 }
 
 export interface IAuthResult {
-  AccessToken: string
-  ExpiresIn: number
+  accessToken: string
+  expiresIn: number
 }
 
 export interface IResultStat {
-  Ok: boolean
+  ok: boolean
 }

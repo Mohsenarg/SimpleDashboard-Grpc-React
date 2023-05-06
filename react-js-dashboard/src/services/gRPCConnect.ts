@@ -50,7 +50,7 @@ let authorizationOptions: RpcOptions = {
                 if (!options.meta) {
                     options.meta = {};
                 }
-                options.meta['Authorization'] = _token!;
+                options.meta['BearerToken'] = _token!;
                 return next(method, input, options);
             }
         }
