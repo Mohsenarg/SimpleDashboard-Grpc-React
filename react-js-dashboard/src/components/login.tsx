@@ -1,7 +1,6 @@
 import React from 'react'
 import { Button, Card, Col, Form, Input, Row, message } from 'antd';
-import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { useNavigate } from 'react-router-dom'
+import { LockOutlined, UserOutlined } from '@ant-design/icons'
 import { Connect } from "../services/gRPCConnect";
 import { IuserLoginEntry } from "../models/Irequest";
 
@@ -11,7 +10,6 @@ type Props = {}
 
 const Login = (props: Props) => {
   const [formLogin] = Form.useForm();
-  const navigate = useNavigate();
   let connection = new Connect();
 
   const errorMessage = (msg: string) => {
@@ -35,11 +33,10 @@ const Login = (props: Props) => {
     if (response.resultStat!.ok) {
       connection.AddToken(response.authResult!.accessToken);
       connection.AddData(response.data!);
-      console.log(response);
       successMessage("login Succesfull, Wellcome " +
         response.data?.name + " " +
         response.data?.lastName);
-      navigate('/dashboard');
+        window.location.reload();
     }
     else {
       errorMessage("Email or Password Incorrect.");

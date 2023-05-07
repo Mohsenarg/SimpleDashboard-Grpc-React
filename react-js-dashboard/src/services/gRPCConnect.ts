@@ -50,7 +50,8 @@ let authorizationOptions: RpcOptions = {
                 if (!options.meta) {
                     options.meta = {};
                 }
-                options.meta['BearerToken'] = _token!;
+                options.meta['allow_headers'] =  'keep-alive,..others..,x-grpc-web,grpc-timeout,authorization' ;
+                options.meta['Authorization'] =  'Bearer '+_token ;
                 return next(method, input, options);
             }
         }
