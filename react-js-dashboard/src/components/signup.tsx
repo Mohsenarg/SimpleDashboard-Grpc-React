@@ -1,5 +1,9 @@
-import { Button, Card, Col, Form, Input, Row, Select } from 'antd'
+import { Button, Card, Col, Form, Input, Row, Select, message } from 'antd'
 import React from 'react'
+import { Connect } from '../services/gRPCConnect';
+import { IuserLoginEntry } from '../models/Irequest';
+import { IData } from '../models/Iresponse';
+import { useNavigate } from 'react-router-dom';
 
 type Props = {}
 
@@ -7,7 +11,56 @@ function Signup({ }: Props) {
 
     const { Option } = Select;
 
+    const [formLogin] = Form.useForm();
+
+    const navigate = useNavigate();
+
+    let connection = new Connect();
+
+    const errorMessage = (msg: string) => {
+        message.open({
+            type: 'error',
+            content: msg,
+            duration: 3
+        });
+    };
+
+    const successMessage = (msg: string) => {
+        message.open({
+            type: 'success',
+            content: msg,
+            duration: 3
+        });
+    };
+
+    const AddUser = async (e: IData) => {
+        let { response } = await connection.AddUser(e);
+        if (response.resultStat?.ok) {
+            connection.AddToken(response.authResult!.accessToken);
+            connection.AddData(response.data!);
+            successMessage("Signup Succesfull, Wellcome " +
+                response.data?.name + " " +
+                response.data?.lastName);
+            navigate('/dashboard');
+        }
+        else {
+            errorMessage("Email or Password Incorrect.");
+        }
+    }
+
+    const onClick = () => {
+
+        formLogin.validateFields().then(
+            () => {
+                let tmp = formLogin.getFieldsValue(true);
+                formLogin.resetFields();
+                AddUser(tmp);
+            }
+        )
+    }
+
     return (
+
         <>
             <Card title="Signup" size="small" bordered={true} >
                 <Row justify="space-around" align="middle">
@@ -95,11 +148,11 @@ function Signup({ }: Props) {
                             >
                                 <Input.Password />
                             </Form.Item>
-
-
-                            <Button type="primary" htmlType="submit">
-                                Signup
-                            </Button>
+                            <Form.Item>
+                                <Button type="primary" htmlType="submit" onClick={onClick}>
+                                    Signup
+                                </Button>
+                            </Form.Item>
                         </Form>
                     </Col >
                 </Row>

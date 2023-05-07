@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { Button, Card, Col, Form, Input, Row, Select, message } from 'antd'
 import { Connect } from '../services/gRPCConnect';
 import { IData } from '../models/Iresponse';
+import { useNavigate } from 'react-router-dom';
 
 type Props = {}
 
@@ -13,6 +14,8 @@ function EditInformation(props: Props) {
 
     const [data, setData] = React.useState<IData>();
 
+    const [value,setValue] = React.useState<object>();
+
     let connection = new Connect();
 
     useEffect((): void => {
@@ -21,7 +24,7 @@ function EditInformation(props: Props) {
 
     useEffect(() => formEdit.resetFields(), [data]);
 
-    
+
 
     const errorMessage = (msg: string) => {
         message.open({
@@ -39,13 +42,24 @@ function EditInformation(props: Props) {
         });
     };
 
-    const login = async (e: IData) => {
+    const handleRefresh = () => {
+        setValue({});
+    };
+
+    const update = async (e: IData) => {
         let { response } = await connection.UserUpdate(e);
         if (response.ok) {
+            let { response } = await connection.Login(e.email, e.password);
+            if (response.resultStat!.ok) {
+                connection.AddToken(response.authResult!.accessToken);
+                connection.AddData(response.data!);
+            }
+            handleRefresh();
             successMessage("User Info Updated");
         }
         else {
             errorMessage("Can Not Update User With This Values");
+            console.log(response.ok);
         }
     }
 
@@ -54,7 +68,7 @@ function EditInformation(props: Props) {
         formEdit.validateFields().then(
             () => {
                 let tmp = formEdit.getFieldsValue(true);
-                login(tmp);
+                update(tmp);
             }
         )
     }
@@ -66,7 +80,7 @@ function EditInformation(props: Props) {
                     <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 24 }} >
                         <Form name="formLogin" form={formEdit} >
                             <Form.Item
-                                name="Name"
+                                name="name"
                                 label="Name"
                                 initialValue={data?.name}
                                 rules={[{ required: true, message: 'Please input your nickname!', whitespace: true }]}
@@ -74,7 +88,7 @@ function EditInformation(props: Props) {
                                 <Input />
                             </Form.Item>
                             <Form.Item
-                                name="LastName"
+                                name="lastName"
                                 label="Last Name"
                                 initialValue={data?.lastName}
                                 rules={[{ required: true, message: 'Please input your nickname!', whitespace: true }]}
