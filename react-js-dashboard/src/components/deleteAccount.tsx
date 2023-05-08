@@ -1,12 +1,46 @@
-import { Button, Result, Typography } from 'antd'
+import { Button, Result, Typography, message } from 'antd'
 import { CloseCircleOutlined } from '@ant-design/icons';
 import React from 'react'
+import { Connect } from '../services/gRPCConnect';
+import { useNavigate } from 'react-router-dom';
 
 type Props = {}
 
 const DeleteAccount = (props: Props) => {
 
     const { Paragraph, Text } = Typography;
+
+    let connection = new Connect();
+
+    const navigate = useNavigate();
+
+    const errorMessage = (msg: string) => {
+        message.open({
+            type: 'error',
+            content: msg,
+            duration: 3
+        });
+    };
+
+    const successMessage = (msg: string) => {
+        message.open({
+            type: 'success',
+            content: msg,
+            duration: 3
+        });
+    };
+
+    const userDelete = async () => {
+        let { response } = await connection.UserDelete();
+        if (response.ok) {
+            connection.Logout();
+            successMessage("Delete Account SuccessFull");
+            navigate('/');
+        }
+        else {
+            errorMessage("Can Not delete User");
+        }
+    }
 
     return (
         <>
