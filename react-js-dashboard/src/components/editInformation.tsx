@@ -59,7 +59,6 @@ function EditInformation(props: Props) {
         }
         else {
             errorMessage("Can Not Update User With This Values");
-            console.log(response.ok);
         }
     }
 
