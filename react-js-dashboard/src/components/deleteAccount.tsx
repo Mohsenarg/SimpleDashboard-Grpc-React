@@ -4,21 +4,21 @@ import React from 'react'
 import { Connect } from '../services/gRPCConnect';
 import { useNavigate } from 'react-router-dom';
 
-type Props = {}
+type Props = {
+    updateSet  (str : string): void
+}
 
-const DeleteAccount = (props: Props) => {
+const DeleteAccount = ({updateSet}: Props) => {
 
     const { Paragraph, Text } = Typography;
 
     let connection = new Connect();
 
-    const navigate = useNavigate();
-
     const errorMessage = (msg: string) => {
         message.open({
             type: 'error',
             content: msg,
-            duration: 3
+            duration: 2
         });
     };
 
@@ -34,8 +34,8 @@ const DeleteAccount = (props: Props) => {
         let { response } = await connection.UserDelete();
         if (response.ok) {
             connection.Logout();
-            successMessage("Delete Account SuccessFull");
-            navigate('/');
+            successMessage("Delete Account Success Full");
+            setTimeout(()=>window.location.reload(), 2000);
         }
         else {
             errorMessage("Can Not delete User");
@@ -49,7 +49,7 @@ const DeleteAccount = (props: Props) => {
                 title="Are You Sure?"
                 subTitle="Please check and modify the following information before resubmitting."
                 extra={
-                    <Button type="primary" key="console">
+                    <Button type="primary" key="console" onClick={userDelete}>
                         Delete Account
                     </Button>
                     }

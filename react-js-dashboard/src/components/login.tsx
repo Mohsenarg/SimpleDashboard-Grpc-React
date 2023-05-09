@@ -3,13 +3,16 @@ import { Button, Card, Col, Form, Input, Row, message } from 'antd';
 import { LockOutlined, UserOutlined } from '@ant-design/icons'
 import { Connect } from "../services/gRPCConnect";
 import { IuserLoginEntry } from "../models/Irequest";
+import { useNavigate } from 'react-router-dom';
 
+type Props = {
+  updateSet(str: string): void
+}
 
+const Login = ({ updateSet }: Props) => {
 
-type Props = {}
-
-const Login = (props: Props) => {
   const [formLogin] = Form.useForm();
+
   let connection = new Connect();
 
   const errorMessage = (msg: string) => {
@@ -24,7 +27,7 @@ const Login = (props: Props) => {
     message.open({
       type: 'success',
       content: msg,
-      duration: 3
+      duration: 2
     });
   };
 
@@ -36,10 +39,13 @@ const Login = (props: Props) => {
       successMessage("login Succesfull, Wellcome " +
         response.data?.name + " " +
         response.data?.lastName);
-        window.location.reload();
+      updateSet("updated");
+      setTimeout(()=>window.location.reload(), 2000);
+      formLogin.resetFields();
     }
     else {
       errorMessage("Email or Password Incorrect.");
+      formLogin.resetFields();
     }
   }
 
@@ -48,7 +54,6 @@ const Login = (props: Props) => {
     formLogin.validateFields().then(
       () => {
         let tmp = formLogin.getFieldsValue(true);
-        formLogin.resetFields();
         login(tmp);
       }
     )

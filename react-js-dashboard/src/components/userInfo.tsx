@@ -3,24 +3,29 @@ import React, { useEffect } from 'react'
 import { Connect } from '../services/gRPCConnect'
 import { IData } from '../models/Iresponse'
 
-type Props = {}
+type Props = {
+    updated: string
+}
 
-const UserInfo = (props: Props) => {
-    const [data , setData]= React.useState<IData>()
+const UserInfo = ({ updated }: Props) => {
+
+
+    const [data, setData] = React.useState<IData>()
 
     useEffect((): void => {
         let connection = new Connect();
         setData(connection.GetData());
-    }, [])
+    }, [updated])
 
+    
     return (
         <>
             <Descriptions title="User Info" bordered>
                 <Descriptions.Item label="Name">{data?.name}</Descriptions.Item>
                 <Descriptions.Item label="Last Name">{data?.lastName}</Descriptions.Item>
-                <Descriptions.Item label="Gender">{data?.isFemale?"Female":"Male"}</Descriptions.Item>
+                <Descriptions.Item label="Gender">{data?.isFemale ? "Female" : "Male"}</Descriptions.Item>
                 <Descriptions.Item label="Address">
-                {data?.address}
+                    {data?.address}
                 </Descriptions.Item>
                 <Descriptions.Item label="Email">{data?.email}</Descriptions.Item>
             </Descriptions>

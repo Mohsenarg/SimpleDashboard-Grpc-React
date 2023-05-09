@@ -8,37 +8,37 @@ import { useNavigate } from 'react-router-dom';
 
 type Props = {
   menu: any,
-  navH : (heightNav: number) => void
+  navH: (heightNav: number) => void,
+  updateSet(str: string): void
 }
 
-const NavBar = ({menu,navH}: Props) => {
-
-  const navigate = useNavigate();
+const NavBar = ({ menu, navH, updateSet }: Props) => {
 
   let connection = new Connect();
-  
+
   const [visible, setVisible] = useState<boolean>(false);
 
-  const ref  = useRef<HTMLElement>(null);
+  const ref = useRef<HTMLElement>(null);
 
-  useEffect(() : void  => {
+  useEffect((): void => {
     if (null !== ref.current) {
-     
-        navH(ref.current.clientHeight);
- 
+
+      navH(ref.current.clientHeight);
+
     }
   }, [])
 
-  const handleResize = () : void => {
+  const handleResize = (): void => {
     if (null !== ref.current) {
-     
+
       navH(ref.current.clientHeight);
 
+    }
   }
-  }
-  const logout =()=>{
+  const logout = () => {
     connection.Logout();
-    navigate('/');
+    updateSet("updated");
+    window.location.reload();
   }
 
   window.addEventListener('resize', handleResize)

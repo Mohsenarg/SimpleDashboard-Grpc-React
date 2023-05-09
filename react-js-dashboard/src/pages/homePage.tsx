@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import Signup from '../components/signup'
-import { Layout, Space, Tabs } from 'antd'
+import { Layout,Tabs } from 'antd'
 import Login from '../components/login'
 import '../assets/css/homePage.css'
 import { useNavigate } from 'react-router-dom'
@@ -9,17 +9,21 @@ type Props = {}
 
 const HomePage = (props: Props) => {
 
+    const [update, setUpdate] = React.useState<string>("");
+
+
+    const updateSet = (str : string): void => {
+        setUpdate(str);
+    }
+
     const navigate = useNavigate();
-
-
-
 
     useEffect((): void => {
         let connection = new Connect();
         if (connection.CheckLogin() === "login") {
             navigate('/dashboard');
         }
-    }, [])
+    }, [update])
 
     const { Content } = Layout;
 
@@ -33,12 +37,12 @@ const HomePage = (props: Props) => {
                             {
                                 label: 'Signup',
                                 key: '1',
-                                children: <Signup />,
+                                children: <Signup updateSet={updateSet} />,
                             },
                             {
                                 label: 'Login',
                                 key: '2',
-                                children: <Login />,
+                                children: <Login updateSet={updateSet} />,
                             },
                         ]}
                     />

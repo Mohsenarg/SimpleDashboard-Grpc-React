@@ -10,7 +10,6 @@ import {
     EditOutlined,
     DeleteOutlined,
     UserOutlined,
-    SettingOutlined
 } from '@ant-design/icons';
 import DeleteAccount from "../components/deleteAccount";
 import UserInfo from "../components/userInfo";
@@ -31,26 +30,31 @@ type Props = {}
 const DashBoard = (props: Props) => {
 
     const navigate = useNavigate();
+    
+
+    const [update, setUpdate] = React.useState<string>("");
 
 
-
+    const updateSet = (str : string): void => {
+        setUpdate(str);
+    }
 
     useEffect((): void => {
         let connection = new Connect();
         if (connection.CheckLogin() === "notlogin") {
             navigate('/');
         }
-    }, [])
+    }, [update])
 
     const icons = [<UserOutlined />, <EditOutlined />, <DeleteOutlined />]
     const deleteAccount = (
-        <DeleteAccount />
+        <DeleteAccount updateSet={updateSet} />
     )
     const userInfo = (
-        <UserInfo />
+        <UserInfo updated={update} />
     )
     const editInformation = (
-        <EditInformation />
+        <EditInformation updateSet={updateSet} />
     )
 
     const topic: tpc[] = [
@@ -85,7 +89,7 @@ const DashBoard = (props: Props) => {
 
     return (
         <div className="App">
-            <NavBar menu={Menu} navH={setHeight} />
+            <NavBar menu={Menu} navH={setHeight} updateSet={updateSet} />
             <Layout>
                 <SideBar menu={Menu} initHeight={totalHeight} />
                 <Layout.Content className="ctndb">
