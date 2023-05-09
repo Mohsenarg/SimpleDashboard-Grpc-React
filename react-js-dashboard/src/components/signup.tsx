@@ -2,18 +2,18 @@ import { Button, Card, Col, Form, Input, Row, Select, message } from 'antd'
 import React from 'react'
 import { Connect } from '../services/gRPCConnect';
 import { IuserLoginEntry } from '../models/Irequest';
-import { IData } from '../models/Iresponse';
+import { IData, IDataForm } from '../models/Iresponse';
 import { useNavigate } from 'react-router-dom';
 
-type Props = {}
+type Props = {
+    updateSet  (str : string): void
+}
 
-function Signup({ }: Props) {
+function Signup({updateSet}: Props) {
 
     const { Option } = Select;
 
-    const [formLogin] = Form.useForm();
-
-    const navigate = useNavigate();
+    const [formSignup] = Form.useForm();
 
     let connection = new Connect();
 
@@ -29,11 +29,12 @@ function Signup({ }: Props) {
         message.open({
             type: 'success',
             content: msg,
-            duration: 3
+            duration: 2
         });
     };
 
     const AddUser = async (e: IData) => {
+        console.log(e);
         let { response } = await connection.AddUser(e);
         if (response.resultStat?.ok) {
             connection.AddToken(response.authResult!.accessToken);
@@ -41,19 +42,21 @@ function Signup({ }: Props) {
             successMessage("Signup Succesfull, Wellcome " +
                 response.data?.name + " " +
                 response.data?.lastName);
-            navigate('/dashboard');
+            updateSet("updated");
+            setTimeout(()=>window.location.reload(), 2000);
+            formSignup.resetFields();
         }
         else {
             errorMessage("Email or Password Incorrect.");
+            formSignup.resetFields();
         }
     }
 
     const onClick = () => {
 
-        formLogin.validateFields().then(
+        formSignup.validateFields().then(
             () => {
-                let tmp = formLogin.getFieldsValue(true);
-                formLogin.resetFields();
+                let tmp = formSignup.getFieldsValue(true);
                 AddUser(tmp);
             }
         )
@@ -65,29 +68,29 @@ function Signup({ }: Props) {
             <Card title="Signup" size="small" bordered={true} >
                 <Row justify="space-around" align="middle">
                     <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 24 }} >
-                        <Form name="formLogin" >
+                        <Form name="formLogin" form={formSignup} >
                             <Form.Item
-                                name="Name"
+                                name="name"
                                 label="Name"
                                 rules={[{ required: true, message: 'Please input your nickname!', whitespace: true }]}
                             >
                                 <Input />
                             </Form.Item>
                             <Form.Item
-                                name="LastName"
+                                name="lastName"
                                 label="Last Name"
                                 rules={[{ required: true, message: 'Please input your nickname!', whitespace: true }]}
                             >
                                 <Input />
                             </Form.Item>
                             <Form.Item
-                                name="gender"
+                                name="isFemale"
                                 label="Gender"
                                 rules={[{ required: true, message: 'Please select gender!' }]}
                             >
                                 <Select placeholder="select your gender">
-                                    <Option value="male">Male</Option>
-                                    <Option value="female">Female</Option>
+                                    <Option value={false}>Male</Option>
+                                    <Option value={true}>Female</Option>
                                 </Select>
                             </Form.Item>
                             <Form.Item

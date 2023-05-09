@@ -102,7 +102,7 @@ class Connect {
     }
 
     UserDelete(): UnaryCall<UserDeleteEntry, ResultStat> {
-        return (client.userDelete([], authorizationOptions));
+        return (client.userDelete(UserDeleteEntry, authorizationOptions));
     }
 }
 

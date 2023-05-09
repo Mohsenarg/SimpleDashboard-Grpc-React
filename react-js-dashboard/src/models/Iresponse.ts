@@ -13,6 +13,15 @@ export interface IData {
   password: string
 }
 
+export interface IDataForm {
+  name: string
+  lastName: string
+  isFemale: boolean | string
+  address: string
+  email: string
+  password: string
+}
+
 export interface IAuthResult {
   accessToken: string
   expiresIn: number

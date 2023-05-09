@@ -4,17 +4,17 @@ import { Connect } from '../services/gRPCConnect';
 import { IData } from '../models/Iresponse';
 import { useNavigate } from 'react-router-dom';
 
-type Props = {}
+type Props = {
+    updateSet  (str : string): void
+}
 
-function EditInformation(props: Props) {
+function EditInformation({updateSet}: Props) {
 
     const [formEdit] = Form.useForm();
 
     const { Option } = Select;
 
     const [data, setData] = React.useState<IData>();
-
-    const [value,setValue] = React.useState<object>();
 
     let connection = new Connect();
 
@@ -30,7 +30,7 @@ function EditInformation(props: Props) {
         message.open({
             type: 'error',
             content: msg,
-            duration: 3
+            duration: 2
         });
     };
 
@@ -42,9 +42,6 @@ function EditInformation(props: Props) {
         });
     };
 
-    const handleRefresh = () => {
-        setValue({});
-    };
 
     const update = async (e: IData) => {
         let { response } = await connection.UserUpdate(e);
@@ -54,8 +51,9 @@ function EditInformation(props: Props) {
                 connection.AddToken(response.authResult!.accessToken);
                 connection.AddData(response.data!);
             }
-            handleRefresh();
+            updateSet("updated");
             successMessage("User Info Updated");
+            setTimeout(()=>window.location.reload(), 2000);
         }
         else {
             errorMessage("Can Not Update User With This Values");
